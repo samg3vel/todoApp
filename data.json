@@ -1,0 +1,39 @@
+{
+    "tasksToDo": [
+        {
+            "id": 1,
+            "summary": "Work out !",
+            "description": "Running in treadmill for 10 minutes.\nSlow walk for 15 minutes\nCycling for 15 minutes \nWeight Lifting for 10 minutes\n",
+            "isDone": false,
+            "percentage": 62
+        },
+        {
+            "id": 2,
+            "summary": "Yoga !",
+            "description": "I have to do yoga to calm my self",
+            "isDone": false,
+            "percentage": 54
+        },
+        {
+            "id": 3,
+            "summary": "Have to Complete design",
+            "description": "Define End points for Api \nUI Fields list should be defined with type",
+            "isDone": true,
+            "percentage": 100
+        },
+        {
+            "summary": "Test Data",
+            "description": "Description Testing data",
+            "isDone": false,
+            "percentage": 40,
+            "id": 4
+        },
+        {
+            "summary": "sdsdg",
+            "description": "sdgsdgsdsddsf",
+            "isDone": true,
+            "percentage": 100,
+            "id": 5
+        }
+    ]
+}
