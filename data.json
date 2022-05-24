@@ -10,30 +10,37 @@
         {
             "id": 2,
             "summary": "Yoga !",
-            "description": "I have to do yoga to calm my self",
+            "description": "Morning 6:30 AM to 7:30 Meditation.\nPranayama, Fish and Butterfly Pose exercise.",
             "isDone": false,
             "percentage": 54
         },
         {
             "id": 3,
             "summary": "Have to Complete design",
-            "description": "Define End points for Api \nUI Fields list should be defined with type",
+            "description": "Define End points for Api.\nUI Fields list should be defined with type.\nER Diagram for Database Model",
             "isDone": true,
             "percentage": 100
         },
         {
-            "summary": "Test Data",
-            "description": "Description Testing data",
+            "summary": "Unit Testing",
+            "description": "Maintain 100% coverage of Unit Test Cases.\nApplication Sanity testing after finishing every work.",
             "isDone": false,
-            "percentage": 40,
+            "percentage": 73,
             "id": 4
         },
         {
-            "summary": "sdsdg",
-            "description": "sdgsdgsdsddsf",
+            "summary": "Requirement Clarification",
+            "description": "Clarification meeting with business Analyst.\nPOC Demo Preparation\nSequence Diagram and System Diagram High Level",
             "isDone": true,
             "percentage": 100,
             "id": 5
+        },
+        {
+            "summary": "Follow Up!",
+            "description": "CI CD Pipeline deployment\nUnit Testcase configuration in CI",
+            "isDone": false,
+            "percentage": 62,
+            "id": 6
         }
     ]
 }

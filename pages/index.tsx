@@ -11,39 +11,44 @@ import { selectToDos } from '../store'
 import { ToDoCard } from '../component/todo-card'
 import { TaskToDo } from '../model/entities'
 
+const useStore = () => {
+  const dispatch = useAppDispatch();
+  return {
+    values: {
+      todoList: useAppSelector(selectToDos)
+    },
+    action: {
+      getAllTodos: () => dispatch(getAllTodos())
+    }
+  }
+}
+
 const Home: NextPage = () => {
   const [Open, setOpen] = useState(false);
   const [task, setTask] = useState<TaskToDo | undefined>();
   const [todos, setTodos] = useState<TaskToDo[]>();
   const [filter, setFilter] = useState<string>("A");
-  const todoList = useAppSelector(selectToDos);
-  const dispatch = useAppDispatch();
+  const { action: { getAllTodos }, values: { todoList } } = useStore();
 
   useEffect(() => {
     if (todoList.length == 0) {
-      dispatch(getAllTodos())
-    } else {
-      setTodos([...todoList])
+      getAllTodos()
     }
   }, [])
 
   useEffect(() => {
     if (todoList.length > 0) {
-      filterTodos(filter);
+      apply(filter);
     }
   }, [todoList])
 
-  const filterTodos = (value: any) => {
+  const apply = (value: string) => {
     setFilter(value);
-    if (value == "U") {
-      setTodos(todoList.filter(t => !t.isDone));
-    }
-    else if (value == "D") {
-      setTodos(todoList.filter(t => !!t.isDone));
-    }
-    else {
-      setTodos([...todoList])
-    }
+    setTodos(
+      value == "U" ? todoList.filter(t => !t.isDone)
+        : value == "D" ? todoList.filter(t => !!t.isDone)
+          : todoList
+    );
   }
 
   const updateTask = (task: TaskToDo) => {
@@ -62,7 +67,7 @@ const Home: NextPage = () => {
         <title>TodoApp</title>
       </Head>
       <main>
-        <ToDoHeader isOpen={Open} onOpen={() => setOpen(true)} filter={filterTodos} />
+        <ToDoHeader onOpen={() => setOpen(true)} apply={apply} />
         <SimpleGrid
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: "4", md: "6", lg: "8" }}

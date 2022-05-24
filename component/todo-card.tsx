@@ -1,6 +1,5 @@
 import {
-    Box, Divider, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack,
-    Tag, TagLabel, TagRightIcon, Text, Icon
+    Box, Divider, Heading, Tag, TagLabel, Text
 } from "@chakra-ui/react";
 import React from 'react';
 import { TaskToDo } from "../model/entities";
@@ -20,8 +19,7 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo, updateMe }) => {
         >
             <Heading size="md" mt="3" onClick={() => updateMe(todo)}>{todo.summary}
             </Heading>
-            <Tag size={"lg"} position="absolute"
-                top="3"
+            <Tag size={"lg"} position="absolute" top="3"
                 right="2" key={"lg"} mt={2} colorScheme='inherit'>
                 <TagLabel>{todo.percentage ?? 0} %</TagLabel>
             </Tag>

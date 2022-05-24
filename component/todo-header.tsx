@@ -1,35 +1,16 @@
-import { Box, Button, chakra, Flex, HStack, Stack, Text, useBreakpointValue, useColorModeValue, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
+import {
+    Box, Button, Flex, HStack, Stack, Text,
+    useBreakpointValue, useColorModeValue, useRadioGroup
+} from "@chakra-ui/react";
+import { CustomRadio } from "./custom-radio";
 
-function CustomRadio(props: any) {
-    const { divProps, ...radioProps } = props
-    const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
-        useRadio(radioProps)
+type TodoHeaderProps = { apply: (value: string) => void, onOpen: () => void }
 
-    return (
-        <chakra.label {...htmlProps} cursor='pointer'>
-            <input {...getInputProps({})} hidden />
-            <Box
-                {...getCheckboxProps()}
-                bg={state.isChecked ? 'whiteAlpha.900' : 'transparent'}
-                w={8}
-                p={1}
-                rounded='full'
-            >
-                <div style={{ ...divProps }} rounded='full' {...getLabelProps()} />
-            </Box>
-        </chakra.label>
-    )
-}
+const ToDoHeader: React.FC<TodoHeaderProps> = ({ onOpen, apply }) => {
 
-const ToDoHeader = (props: any) => {
-    const { onOpen, isOpen, filter } = props;
-    const handleChange = (value: any) => {
-        filter && filter(value);
-    }
-
-    const { value, getRadioProps, getRootProps } = useRadioGroup({
-        defaultValue: 'Kevin',
-        onChange: handleChange,
+    const { getRadioProps } = useRadioGroup({
+        defaultValue: 'A',
+        onChange: apply,
     })
 
     return (
