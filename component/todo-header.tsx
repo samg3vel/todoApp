@@ -2,17 +2,21 @@ import {
     Box, Button, Flex, HStack, Stack, Text,
     useBreakpointValue, useColorModeValue, useRadioGroup
 } from "@chakra-ui/react";
-import { toggleModelAction, useAppDispatch } from "../store";
+import { Filter } from "../model/entities";
+import { applyFilterAction, toggleModelAction, useAppDispatch } from "../store";
 import { CustomRadio } from "./custom-radio";
 
-type TodoHeaderProps = { apply: (value: string) => void }
 
-const ToDoHeader: React.FC<TodoHeaderProps> = ({ apply }) => {
+const ToDoHeader: React.FC<{}> = () => {
 
     const dispatch = useAppDispatch();
     const { getRadioProps } = useRadioGroup({
         defaultValue: 'A',
-        onChange: apply,
+        onChange: (value: string) => {
+            dispatch(applyFilterAction(value == "U" ? Filter.Undone
+                : value == "D" ? Filter.Done
+                    : Filter.All))
+        },
     })
 
     return (

@@ -7,3 +7,9 @@ export interface TaskToDo {
     isDone: boolean;
     percentage: number;
 }
+
+export enum Filter {
+    All,
+    Done,
+    Undone
+}

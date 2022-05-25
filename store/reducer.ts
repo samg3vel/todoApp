@@ -1,8 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { TaskToDo } from "../model/entities";
-import { addAction, updateAction, deleteAction, fillAction, toggleModelAction, addEditTaskAction } from "./actions";
+import { Filter, TaskToDo } from "../model/entities";
+import { addAction, updateAction, deleteAction, fillAction, toggleModelAction, addEditTaskAction, applyFilterAction } from "./actions";
 
-const initialState = { toDos: [] as TaskToDo[], toggleModel: false, updatingTodo: undefined as TaskToDo | undefined }
+const initialState = {
+    toDos: [] as TaskToDo[],
+    toggleModel: false,
+    updatingTodo: undefined as TaskToDo | undefined,
+    filter: Filter.All
+}
 
 export const todoReducer = createReducer(initialState, builder => {
     builder.addCase(addAction, (state, action) => {
@@ -21,5 +26,7 @@ export const todoReducer = createReducer(initialState, builder => {
         state.toggleModel = !state.toggleModel;
     }).addCase(addEditTaskAction, (state, action) => {
         state.updatingTodo = action.payload;
+    }).addCase(applyFilterAction, (state, action) => {
+        state.filter = action.payload;
     })
 });

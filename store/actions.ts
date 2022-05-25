@@ -1,5 +1,5 @@
 import { AnyAction, createAction, ThunkAction } from "@reduxjs/toolkit"
-import { TaskToDo } from "../model/entities";
+import { TaskToDo, Filter } from "../model/entities";
 import { getApis } from "./fetch-api";
 import { RootState } from "./store";
 
@@ -7,6 +7,7 @@ export const addAction = createAction<TaskToDo>('todo/add');
 export const updateAction = createAction<TaskToDo>('todo/update');
 export const deleteAction = createAction<number>('todo/delete');
 export const fillAction = createAction<TaskToDo[]>('todo/fill');
+export const applyFilterAction = createAction<Filter>('flter');
 export const toggleModelAction = createAction('toggleModel');
 export const addEditTaskAction = createAction<TaskToDo | undefined>('updatingTodo');
 const URL: string = "http://localhost:3000";

@@ -11,8 +11,8 @@
             "id": 2,
             "summary": "Yoga !",
             "description": "Morning 6:30 AM to 7:30 Meditation.\nPranayama, Fish and Butterfly Pose exercise.",
-            "isDone": false,
-            "percentage": 47
+            "isDone": true,
+            "percentage": 100
         },
         {
             "id": 3,
@@ -38,8 +38,8 @@
         {
             "summary": "Follow Up!",
             "description": "CI CD Pipeline deployment\nUnit Testcase configuration in CI",
-            "isDone": false,
-            "percentage": 93,
+            "isDone": true,
+            "percentage": 100,
             "id": 6
         }
     ]

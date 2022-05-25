@@ -7,9 +7,9 @@ import ToDoHeader from '../component/todo-header'
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { getAllTodos } from '../store/actions'
-import { selectToDos, selectToggleModel, selectUpdatingTodo } from '../store'
+import { selectFilter, selectToDos, selectToggleModel, selectUpdatingTodo } from '../store'
 import { ToDoCard } from '../component/todo-card'
-import { TaskToDo } from '../model/entities'
+import { Filter, TaskToDo } from '../model/entities'
 
 const useStore = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ const useStore = () => {
     values: {
       todoList: useAppSelector(selectToDos),
       show: useAppSelector(selectToggleModel),
-      updatingTask: useAppSelector(selectUpdatingTodo)
+      filter: useAppSelector(selectFilter)
     },
     action: {
       getAllTodos: () => dispatch(getAllTodos())
@@ -27,8 +27,7 @@ const useStore = () => {
 
 const Home: NextPage = () => {
   const [todos, setTodos] = useState<TaskToDo[]>();
-  const [filter, setFilter] = useState<string>("A");
-  const { action: { getAllTodos }, values: { todoList, show } } = useStore();
+  const { action: { getAllTodos }, values: { todoList, show, filter } } = useStore();
 
   useEffect(() => {
     if (todoList.length == 0) {
@@ -38,18 +37,13 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (todoList.length > 0) {
-      apply(filter);
+      setTodos(
+        filter == Filter.Undone ? todoList.filter(t => !t.isDone)
+          : filter == Filter.Done ? todoList.filter(t => !!t.isDone)
+            : todoList
+      );
     }
-  }, [todoList])
-
-  const apply = (value: string) => {
-    setFilter(value);
-    setTodos(
-      value == "U" ? todoList.filter(t => !t.isDone)
-        : value == "D" ? todoList.filter(t => !!t.isDone)
-          : todoList
-    );
-  }
+  }, [todoList, filter])
 
   return (
     <div>
@@ -57,7 +51,7 @@ const Home: NextPage = () => {
         <title>TodoApp</title>
       </Head>
       <main>
-        <ToDoHeader apply={apply} />
+        <ToDoHeader />
         <SimpleGrid
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: "4", md: "6", lg: "8" }}

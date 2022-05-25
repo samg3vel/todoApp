@@ -3,8 +3,7 @@ import {
 } from "@chakra-ui/react";
 import React from 'react';
 import { TaskToDo } from "../model/entities";
-import { updateTodoModel } from "../store";
-import { useAppDispatch } from "../store/hooks";
+import { updateTodoModel, useAppDispatch } from "../store";
 
 type ToDoCardProps = { todo: TaskToDo }
 export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
