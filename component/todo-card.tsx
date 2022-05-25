@@ -19,9 +19,9 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
             p="4"
             backgroundColor={todo.isDone ? "#7ddebe" : "#67c6da"}
         >
-            <Heading size="md" mt="3" onClick={() => dispatch(updateTodoModel(todo))}>{todo.summary}
+            <Heading size="md" mt="3" cursor={"pointer"} onClick={() => dispatch(updateTodoModel(todo))}>{todo.summary}
             </Heading>
-            <Tag size={"lg"} position="absolute" top="3"
+            <Tag size={"lg"} position="absolute" top="4"
                 right="2" key={"lg"} mt={2} colorScheme='inherit'>
                 <TagLabel>{todo.percentage ?? 0} %</TagLabel>
             </Tag>

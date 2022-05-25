@@ -37,6 +37,9 @@ const ToDoHeader: React.FC<{}> = () => {
                         fontFamily={'heading'}
                         fontSize={"x-large"}
                         fontWeight={"bold"}
+                        _hover={{
+                            transform: 'translateY(-2px)',
+                        }}
                         color={useColorModeValue('#1b5c5f', 'white')}>
                         Its My Todo
                     </Text>
