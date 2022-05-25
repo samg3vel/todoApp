@@ -2,24 +2,24 @@
     "tasksToDo": [
         {
             "id": 1,
-            "summary": "Work out !",
-            "description": "Running in treadmill for 10 minutes.\nSlow walk for 15 minutes\nCycling for 15 minutes \nWeight Lifting for 10 minutes\n",
+            "summary": "Daily Work out !",
+            "description": "Running in treadmill for 10 minutes !\nSlow walk for 15 minutes.\nCycling for 15 minutes !\nWeight Lifting for 10 minutes\n",
             "isDone": false,
-            "percentage": 62
+            "percentage": 19
         },
         {
             "id": 2,
             "summary": "Yoga !",
             "description": "Morning 6:30 AM to 7:30 Meditation.\nPranayama, Fish and Butterfly Pose exercise.",
             "isDone": false,
-            "percentage": 54
+            "percentage": 47
         },
         {
             "id": 3,
             "summary": "Have to Complete design",
             "description": "Define End points for Api.\nUI Fields list should be defined with type.\nER Diagram for Database Model",
-            "isDone": true,
-            "percentage": 100
+            "isDone": false,
+            "percentage": 81
         },
         {
             "summary": "Unit Testing",
@@ -39,7 +39,7 @@
             "summary": "Follow Up!",
             "description": "CI CD Pipeline deployment\nUnit Testcase configuration in CI",
             "isDone": false,
-            "percentage": 62,
+            "percentage": 93,
             "id": 6
         }
     ]

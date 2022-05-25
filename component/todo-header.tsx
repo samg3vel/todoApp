@@ -2,12 +2,14 @@ import {
     Box, Button, Flex, HStack, Stack, Text,
     useBreakpointValue, useColorModeValue, useRadioGroup
 } from "@chakra-ui/react";
+import { toggleModelAction, useAppDispatch } from "../store";
 import { CustomRadio } from "./custom-radio";
 
-type TodoHeaderProps = { apply: (value: string) => void, onOpen: () => void }
+type TodoHeaderProps = { apply: (value: string) => void }
 
-const ToDoHeader: React.FC<TodoHeaderProps> = ({ onOpen, apply }) => {
+const ToDoHeader: React.FC<TodoHeaderProps> = ({ apply }) => {
 
+    const dispatch = useAppDispatch();
     const { getRadioProps } = useRadioGroup({
         defaultValue: 'A',
         onChange: apply,
@@ -67,7 +69,7 @@ const ToDoHeader: React.FC<TodoHeaderProps> = ({ onOpen, apply }) => {
                             transform: 'translateY(-2px)',
                             boxShadow: 'lg',
                         }}
-                        onClick={onOpen}
+                        onClick={() => dispatch(toggleModelAction())}
                     >
                         Add ToDo
                     </Button>

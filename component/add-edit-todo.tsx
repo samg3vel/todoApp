@@ -4,15 +4,28 @@ import {
     Switch, ModalFooter, ButtonGroup, Button, Text, Slider, SliderFilledTrack, SliderThumb, SliderTrack, useToast
 } from "@chakra-ui/react";
 import React, { ReactElement, useState } from "react";
-import { useAppDispatch } from "../store/hooks";
-import { updateTodos, postTodos } from "../store/actions"
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { updateTodos, postTodos, getAllTodos, toggleModelAction } from "../store/actions"
 import { TaskToDo } from "../model/entities";
 import { deleteTodos } from '../store/actions'
+import { selectToggleModel, selectUpdatingTodo } from "../store";
 
-type AddEditToDoProps = { isOpen: boolean, onClose: () => void, task: TaskToDo };
+const useStore = () => {
+    const dispatch = useAppDispatch();
+    return {
+        values: {
+            show: useAppSelector(selectToggleModel),
+            task: useAppSelector(selectUpdatingTodo)
+        },
+        action: {
+            toggleModel: () => dispatch(toggleModelAction())
+        }
+    }
+}
 
-export const AddEditToDo: React.FC<AddEditToDoProps> = ({ isOpen, onClose, task }): ReactElement<any, any> | null => {
-    if (!isOpen) return null;
+export const AddEditToDo: React.FC<{}> = (): ReactElement<any, any> | null => {
+    const { values: { show, task }, action: { toggleModel } } = useStore();
+    if (!show) return null;
     const dispatch = useAppDispatch();
     const toast = useToast()
     const [summary, setSummary] = useState(task?.summary ?? "");
@@ -32,7 +45,7 @@ export const AddEditToDo: React.FC<AddEditToDoProps> = ({ isOpen, onClose, task 
             setErrorMessage("Description must have atleas 10 characters");
             return;
         }
-        const toDo = { ...(task ?? {}), summary, description, isDone, percentage }
+        const toDo = { ...(task ?? {}), summary, description, isDone, percentage } as TaskToDo
         if (task?.id) {
             dispatch(updateTodos(toDo))
             toast({
@@ -67,12 +80,13 @@ export const AddEditToDo: React.FC<AddEditToDoProps> = ({ isOpen, onClose, task 
         setSummary("");
         setDescription("");
         setIsDone(false);
-        onClose();
+        // onClose();
+        toggleModel()
     };
 
     return (
         <Modal
-            isOpen={isOpen}
+            isOpen={show}
             onClose={onModalClose}>
             <ModalOverlay />
             <ModalContent>

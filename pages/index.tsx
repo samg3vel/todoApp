@@ -7,7 +7,7 @@ import ToDoHeader from '../component/todo-header'
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { getAllTodos } from '../store/actions'
-import { selectToDos } from '../store'
+import { selectToDos, selectToggleModel, selectUpdatingTodo } from '../store'
 import { ToDoCard } from '../component/todo-card'
 import { TaskToDo } from '../model/entities'
 
@@ -15,7 +15,9 @@ const useStore = () => {
   const dispatch = useAppDispatch();
   return {
     values: {
-      todoList: useAppSelector(selectToDos)
+      todoList: useAppSelector(selectToDos),
+      show: useAppSelector(selectToggleModel),
+      updatingTask: useAppSelector(selectUpdatingTodo)
     },
     action: {
       getAllTodos: () => dispatch(getAllTodos())
@@ -24,11 +26,9 @@ const useStore = () => {
 }
 
 const Home: NextPage = () => {
-  const [Open, setOpen] = useState(false);
-  const [task, setTask] = useState<TaskToDo | undefined>();
   const [todos, setTodos] = useState<TaskToDo[]>();
   const [filter, setFilter] = useState<string>("A");
-  const { action: { getAllTodos }, values: { todoList } } = useStore();
+  const { action: { getAllTodos }, values: { todoList, show } } = useStore();
 
   useEffect(() => {
     if (todoList.length == 0) {
@@ -51,33 +51,23 @@ const Home: NextPage = () => {
     );
   }
 
-  const updateTask = (task: TaskToDo) => {
-    setTask(task);
-    setOpen(true);
-  }
-
-  const reset = () => {
-    setTask(undefined);
-    setOpen(false);
-  }
-
   return (
     <div>
       <Head>
         <title>TodoApp</title>
       </Head>
       <main>
-        <ToDoHeader onOpen={() => setOpen(true)} apply={apply} />
+        <ToDoHeader apply={apply} />
         <SimpleGrid
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: "4", md: "6", lg: "8" }}
           m="10"
         >
           {todos && todos.map((todo) => (
-            <ToDoCard todo={todo} key={todo.id} updateMe={updateTask} />
+            <ToDoCard todo={todo} key={todo.id} />
           ))}
         </SimpleGrid>
-        {Open && <AddEditToDo isOpen={Open} onClose={reset} task={task!} />}
+        {show && <AddEditToDo />}
       </main>
     </div>
   )

@@ -7,6 +7,8 @@ export const addAction = createAction<TaskToDo>('todo/add');
 export const updateAction = createAction<TaskToDo>('todo/update');
 export const deleteAction = createAction<number>('todo/delete');
 export const fillAction = createAction<TaskToDo[]>('todo/fill');
+export const toggleModelAction = createAction('toggleModel');
+export const addEditTaskAction = createAction<TaskToDo | undefined>('updatingTodo');
 const URL: string = "http://localhost:3000";
 
 
@@ -46,4 +48,9 @@ export const deleteTodos = (id: number): ThunkAction<void, RootState, undefined,
     const api = getApis(URL);
     await api.deleteTodos({ id: String(id) });
     dispatch(deleteAction(id));
+}
+
+export const updateTodoModel = (task: TaskToDo): ThunkAction<void, RootState, undefined, AnyAction> => (dispatch) => {
+    dispatch(toggleModelAction());
+    dispatch(addEditTaskAction(task));
 }

@@ -3,9 +3,12 @@ import {
 } from "@chakra-ui/react";
 import React from 'react';
 import { TaskToDo } from "../model/entities";
+import { updateTodoModel } from "../store";
+import { useAppDispatch } from "../store/hooks";
 
-type ToDoCardProps = { todo: TaskToDo, updateMe: (task: TaskToDo) => void }
-export const ToDoCard: React.FC<ToDoCardProps> = ({ todo, updateMe }) => {
+type ToDoCardProps = { todo: TaskToDo }
+export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
+    const dispatch = useAppDispatch();
     return (
         <Box
             position="relative"
@@ -17,7 +20,7 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo, updateMe }) => {
             p="4"
             backgroundColor={todo.isDone ? "#7ddebe" : "#67c6da"}
         >
-            <Heading size="md" mt="3" onClick={() => updateMe(todo)}>{todo.summary}
+            <Heading size="md" mt="3" onClick={() => dispatch(updateTodoModel(todo))}>{todo.summary}
             </Heading>
             <Tag size={"lg"} position="absolute" top="3"
                 right="2" key={"lg"} mt={2} colorScheme='inherit'>
