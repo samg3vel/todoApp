@@ -17,7 +17,12 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
             boxShadow={'2xl'}
             overflow="hidden"
             p="4"
-            backgroundColor={todo.isDone ? "#7ddebe" : "#67c6da"}
+            backgroundColor={todo.isDone ? "#38e3ab" : "#1cd7fe"}
+            color={"saddlebrown"}
+            transition={"transform 1s"}
+            _hover={{
+                transform: 'scale(1)'
+            }}
         >
             <Heading size="md" mt="3" cursor={"pointer"} onClick={() => dispatch(updateTodoModel(todo))}>{todo.summary}
             </Heading>

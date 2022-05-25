@@ -10,7 +10,7 @@ export const CustomRadio = (props: any) => {
             <input {...getInputProps({})} hidden />
             <Box
                 {...getCheckboxProps()}
-                bg={state.isChecked ? 'whiteAlpha.900' : 'transparent'}
+                bg={state.isChecked ? '#b03434' : 'transparent'}
                 w={8}
                 p={1}
                 rounded='full'

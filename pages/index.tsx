@@ -10,6 +10,7 @@ import { getAllTodos } from '../store/actions'
 import { selectFilter, selectToDos, selectToggleModel, selectUpdatingTodo } from '../store'
 import { ToDoCard } from '../component/todo-card'
 import { Filter, TaskToDo } from '../model/entities'
+import { LightAnimatedBackground } from '../component/light-animation'
 
 const useStore = () => {
   const dispatch = useAppDispatch();

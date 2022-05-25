@@ -5,6 +5,7 @@ import {
 import { Filter } from "../model/entities";
 import { applyFilterAction, toggleModelAction, useAppDispatch } from "../store";
 import { CustomRadio } from "./custom-radio";
+import { LightAnimatedBackground } from "./light-animation";
 
 
 const ToDoHeader: React.FC<{}> = () => {
@@ -22,7 +23,7 @@ const ToDoHeader: React.FC<{}> = () => {
     return (
         <Box>
             <Flex
-                bg={useColorModeValue('#b9f5fd', 'gray.800')}
+                bg={useColorModeValue('#4286ec', 'gray.800')}
                 color={useColorModeValue('gray.600', 'white')}
                 minH={'60px'}
                 py={{ base: 2 }}
@@ -40,7 +41,7 @@ const ToDoHeader: React.FC<{}> = () => {
                         _hover={{
                             transform: 'translateY(-2px)',
                         }}
-                        color={useColorModeValue('#1b5c5f', 'white')}>
+                        color={useColorModeValue('#a8f2f6', 'white')}>
                         Its My Todo
                     </Text>
                 </Flex>
@@ -58,12 +59,12 @@ const ToDoHeader: React.FC<{}> = () => {
                         />
                         <CustomRadio
                             key={"doneTodos"}
-                            divProps={{ backgroundColor: "#7ddebe", borderRadius: "20px", height: "23px" }}
+                            divProps={{ backgroundColor: "#38e3ab", borderRadius: "20px", height: "23px" }}
                             {...getRadioProps({ value: "D" })}
                         />
                         <CustomRadio
                             key={"unDoneTodos"}
-                            divProps={{ backgroundColor: "#67c6da", borderRadius: "20px", height: "23px" }}
+                            divProps={{ backgroundColor: "#1cd7fe", borderRadius: "20px", height: "23px" }}
                             {...getRadioProps({ value: "U" })}
                         />
                     </HStack>
@@ -82,6 +83,7 @@ const ToDoHeader: React.FC<{}> = () => {
                     </Button>
                 </Stack>
             </Flex>
+            <LightAnimatedBackground />
         </Box>
     );
 }
