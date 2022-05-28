@@ -47,8 +47,10 @@ export const updateTodos = (task: TaskToDo): ThunkAction<void, RootState, undefi
 export const deleteTodos = (id: number): ThunkAction<void, RootState, undefined, AnyAction> => async (dispatch) => {
 
     const api = getApis(URL);
-    await api.deleteTodos({ id: String(id) });
-    dispatch(deleteAction(id));
+    const { status } = await api.deleteTodos({ id: String(id) });
+    if (status) {
+        dispatch(deleteAction(id));
+    }
 }
 
 export const updateTodoModel = (task: TaskToDo): ThunkAction<void, RootState, undefined, AnyAction> => (dispatch) => {

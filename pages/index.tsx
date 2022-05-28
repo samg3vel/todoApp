@@ -62,6 +62,7 @@ const Home: NextPage = () => {
             <ToDoCard todo={todo} key={todo.id} />
           ))}
         </SimpleGrid>
+        <LightAnimatedBackground />
         {show && <AddEditToDo />}
       </main>
     </div>

@@ -1,14 +1,16 @@
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,
-    ModalBody, Alert, AlertIcon, FormControl, FormLabel, Input, Textarea, FormHelperText,
+    ModalBody, Alert, AlertIcon, FormControl, FormLabel, Input, Textarea,
     Switch, ModalFooter, ButtonGroup, Button, Text, Slider, SliderFilledTrack, SliderThumb, SliderTrack, useToast
 } from "@chakra-ui/react";
-import React, { ReactElement, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { updateTodos, postTodos, getAllTodos, toggleModelAction } from "../store/actions"
+import React, { useState } from "react";
 import { TaskToDo } from "../model/entities";
-import { deleteTodos } from '../store/actions'
-import { selectToggleModel, selectUpdatingTodo } from "../store";
+import {
+    updateTodos, postTodos, deleteTodos,
+    addEditTaskAction, toggleModelAction,
+    selectToggleModel, selectUpdatingTodo,
+    useAppDispatch, useAppSelector
+} from "../store"
 
 const useStore = () => {
     const dispatch = useAppDispatch();
@@ -18,12 +20,12 @@ const useStore = () => {
             task: useAppSelector(selectUpdatingTodo)
         },
         action: {
-            toggleModel: () => dispatch(toggleModelAction())
+            toggleModel: () => { dispatch(toggleModelAction()); dispatch(addEditTaskAction()); }
         }
     }
 }
 
-export const AddEditToDo: React.FC<{}> = (): ReactElement<any, any> | null => {
+export const AddEditToDo: React.FC = () => {
     const { values: { show, task }, action: { toggleModel } } = useStore();
     if (!show) return null;
     const dispatch = useAppDispatch();

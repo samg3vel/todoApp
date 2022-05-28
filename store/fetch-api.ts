@@ -1,5 +1,5 @@
 import { TaskToDo } from "../model/entities";
-import { IArgs, IEndpoint, EURL, EMETHOD, EARGS, EREQ, ERESP, Methods } from "./types";
+import { IArgs, IDefinition, URL, HttpVerb, QueryStrings, RequestType, ResponseType, Methods } from "./types";
 
 export const readBody = (() => {
     const cache = new WeakMap<Response, Promise<unknown>>();
@@ -10,6 +10,9 @@ export const readBody = (() => {
                 if (text) {
                     respBodyData = JSON.parse(text || "null");
                 }
+                else if (r.status == 204) {
+                    respBodyData = { status: true }
+                }
                 return respBodyData;
             }))
         }
@@ -19,9 +22,9 @@ export const readBody = (() => {
 
 const getUrlQueryParams = (args: IArgs) => args && Object.keys(args).length > 0 ? "?" + new URLSearchParams(args) : ""
 
-export const consumer = <T extends IEndpoint<any, any, any, any, any>>(baseUrl: string) => (url: EURL<T>, method: EMETHOD<T>) => (
-    args?: EARGS<T>,
-    req?: EREQ<T>
+export const consumer = <T extends IDefinition<any, any, any, any, any>>(baseUrl: string) => (url: URL<T>, method: HttpVerb<T>) => (
+    args?: QueryStrings<T>,
+    req?: RequestType<T>
 ) => {
     const jsonD: any = {
         method,
@@ -31,14 +34,14 @@ export const consumer = <T extends IEndpoint<any, any, any, any, any>>(baseUrl: 
         },
         mode: "cors",
     }
-    if (["POST", "PUT"].includes(method)) {
+    if ([Methods.POST, Methods.PUT].includes(method)) {
         jsonD.body = req ? JSON.stringify(req) : undefined;
     }
     return fetch(baseUrl + url + getUrlQueryParams(args), jsonD).then((response: Response) => {
         if (response.ok) {
             return readBody(response);
         }
-    }) as Promise<ERESP<T>>;
+    }) as Promise<ResponseType<T>>;
 }
 
 export const getApis = (baseUrl: string) => {
@@ -50,7 +53,7 @@ export const getApis = (baseUrl: string) => {
     }
 }
 
-type getTodos = IEndpoint<"/api/todo", undefined, Methods.GET, {}, { tasksToDo: TaskToDo[] }>
-type pushTodos = IEndpoint<"/api/todo", undefined, Methods.POST, { task: TaskToDo }, { task: TaskToDo }>
-type updateTodos = IEndpoint<"/api/todo", { id: string }, Methods.PUT, { task: TaskToDo }, { status: boolean }>
-type deleteTodos = IEndpoint<"/api/todo", { id: string }, Methods.DELETE, {}, {}>
+type getTodos = IDefinition<"/api/todo", undefined, Methods.GET, {}, { tasksToDo: TaskToDo[] }>
+type pushTodos = IDefinition<"/api/todo", undefined, Methods.POST, { task: TaskToDo }, { task: TaskToDo }>
+type updateTodos = IDefinition<"/api/todo", { id: string }, Methods.PUT, { task: TaskToDo }, { status: boolean }>
+type deleteTodos = IDefinition<"/api/todo", { id: string }, Methods.DELETE, {}, { status: boolean }>

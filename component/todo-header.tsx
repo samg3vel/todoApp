@@ -5,7 +5,6 @@ import {
 import { Filter } from "../model/entities";
 import { applyFilterAction, toggleModelAction, useAppDispatch } from "../store";
 import { CustomRadio } from "./custom-radio";
-import { LightAnimatedBackground } from "./light-animation";
 
 
 const ToDoHeader: React.FC<{}> = () => {
@@ -83,7 +82,6 @@ const ToDoHeader: React.FC<{}> = () => {
                     </Button>
                 </Stack>
             </Flex>
-            <LightAnimatedBackground />
         </Box>
     );
 }

@@ -17,7 +17,7 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
             boxShadow={'2xl'}
             overflow="hidden"
             p="4"
-            backgroundColor={todo.isDone ? "#38e3ab" : "#1cd7fe"}
+            backgroundColor={todo.isDone ? "#42d2a3" : "#4dbcd8"}
             color={"saddlebrown"}
             transition={"transform 1s"}
             _hover={{
@@ -31,7 +31,7 @@ export const ToDoCard: React.FC<ToDoCardProps> = ({ todo }) => {
                 <TagLabel>{todo.percentage ?? 0} %</TagLabel>
             </Tag>
             <Divider my="4" borderColor={"#0f363e"} />
-            <Text noOfLines={[1, 2, 3, 4]} color="gray.800" style={{ whiteSpace: "pre-line" }}>
+            <Text noOfLines={[1, 2, 3, 4]} color="gray.800" style={{ whiteSpace: "pre-line", color:"#f0f0f0" }}>
                 {todo.description}
             </Text>
         </Box>
