@@ -1,5 +1,5 @@
 import { AnyAction, createAction, ThunkAction } from "@reduxjs/toolkit"
-import { TaskToDo, Filter } from "../model/entities";
+import { TaskToDo } from "../model/entities";
 import { getApis } from "./fetch-api";
 import { RootState } from "./store";
 
@@ -7,20 +7,13 @@ export const addAction = createAction<TaskToDo>('todo/add');
 export const updateAction = createAction<TaskToDo>('todo/update');
 export const deleteAction = createAction<number>('todo/delete');
 export const fillAction = createAction<TaskToDo[]>('todo/fill');
-export const applyFilterAction = createAction<Filter>('flter');
+export const statusFilterAction = createAction<"A" | "U" | "D">('filter/status');
+export const searchFilterAction = createAction<string | undefined>('filter/search');
 export const toggleModelAction = createAction('toggleModel');
 export const addEditTaskAction = createAction<TaskToDo | undefined>('updatingTodo');
+export const clearScrollAction = createAction<undefined>('scrollTId');
 const URL: string = "http://localhost:3000";
 
-
-export const getAllTodos = (): ThunkAction<void, RootState, undefined, AnyAction> => async (dispatch) => {
-
-    const api = getApis(URL);
-    const { tasksToDo } = await api.getTodos()
-    if (tasksToDo.length > 0) {
-        dispatch(fillAction(tasksToDo));
-    }
-}
 
 export const postTodos = (task: TaskToDo): ThunkAction<void, RootState, undefined, AnyAction> => async (dispatch, getState) => {
     const { toDos } = getState();

@@ -7,6 +7,7 @@ import { todoReducer } from './reducer';
 
 export const store = configureStore({
     reducer: todoReducer,
+    devTools: true,
 });
 
 export type AppDispatch = typeof store.dispatch;

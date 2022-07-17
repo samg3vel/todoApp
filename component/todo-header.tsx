@@ -1,22 +1,18 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import {
-    Box, Button, Flex, HStack, Stack, Text,
+    Box, Button, Flex, HStack, Input, InputGroup, InputLeftElement, Stack, Text,
     useBreakpointValue, useColorModeValue, useRadioGroup
 } from "@chakra-ui/react";
-import { Filter } from "../model/entities";
-import { applyFilterAction, toggleModelAction, useAppDispatch } from "../store";
+import { searchFilterAction, statusFilterAction, toggleModelAction, useAppDispatch } from "../store";
 import { CustomRadio } from "./custom-radio";
 
 
-const ToDoHeader: React.FC<{}> = () => {
+export const ToDoHeader: React.FC<{}> = () => {
 
     const dispatch = useAppDispatch();
     const { getRadioProps } = useRadioGroup({
         defaultValue: 'A',
-        onChange: (value: string) => {
-            dispatch(applyFilterAction(value == "U" ? Filter.Undone
-                : value == "D" ? Filter.Done
-                    : Filter.All))
-        },
+        onChange: (value: any) => dispatch(statusFilterAction(value))
     })
 
     return (
@@ -50,6 +46,14 @@ const ToDoHeader: React.FC<{}> = () => {
                     justify={'flex-end'}
                     direction={'row'}
                     spacing={6}>
+                    <InputGroup minWidth={'20rem'}>
+                        <InputLeftElement
+                            pointerEvents='none'
+                            children={<SearchIcon color='blue.300' />}
+                        />
+                        <Input backgroundColor={"white"} type='tel' placeholder='Search Todos'
+                            onChange={(event) => dispatch(searchFilterAction(event.target.value))} />
+                    </InputGroup>
                     <HStack>
                         <CustomRadio
                             key={"allTodos"}
@@ -85,5 +89,3 @@ const ToDoHeader: React.FC<{}> = () => {
         </Box>
     );
 }
-
-export default ToDoHeader;

@@ -1,50 +1,27 @@
-import { Box, HStack, SimpleGrid, Tag, useDisclosure } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useRef } from 'react'
-import { AddEditToDo } from '../component/add-edit-todo'
-import ToDoHeader from '../component/todo-header'
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { getAllTodos } from '../store/actions'
-import { selectFilter, selectToDos, selectToggleModel, selectUpdatingTodo } from '../store'
-import { ToDoCard } from '../component/todo-card'
-import { Filter, TaskToDo } from '../model/entities'
-import { LightAnimatedBackground } from '../component/light-animation'
+import { useEffect } from 'react'
+import { useAppDispatch } from '../store/hooks'
+import { fillAction } from '../store/actions'
+import { ToDoHeader, TodoGrid } from '../component'
+import { getApis } from '../store/fetch-api'
+import { TaskToDo } from '../model/entities'
 
-const useStore = () => {
-  const dispatch = useAppDispatch();
-  return {
-    values: {
-      todoList: useAppSelector(selectToDos),
-      show: useAppSelector(selectToggleModel),
-      filter: useAppSelector(selectFilter)
-    },
-    action: {
-      getAllTodos: () => dispatch(getAllTodos())
-    }
-  }
+export async function getServerSideProps() {
+  const URL: string = "http://localhost:3000";
+  const api = getApis(URL);
+  const { tasksToDo } = await api.getTodos()
+  return { props: { data: tasksToDo } }
 }
 
-const Home: NextPage = () => {
-  const [todos, setTodos] = useState<TaskToDo[]>();
-  const { action: { getAllTodos }, values: { todoList, show, filter } } = useStore();
+const Home: NextPage<{ data: TaskToDo[] }> = ({ data }) => {
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (todoList.length == 0) {
-      getAllTodos()
+    if (data && data.length > 0) {
+      dispatch(fillAction(data));
     }
-  }, [])
-
-  useEffect(() => {
-    if (todoList.length > 0) {
-      setTodos(
-        filter == Filter.Undone ? todoList.filter(t => !t.isDone)
-          : filter == Filter.Done ? todoList.filter(t => !!t.isDone)
-            : todoList
-      );
-    }
-  }, [todoList, filter])
+  }, [data])
 
   return (
     <div>
@@ -53,17 +30,7 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <ToDoHeader />
-        <SimpleGrid
-          columns={{ base: 2, md: 3, lg: 4 }}
-          gap={{ base: "4", md: "6", lg: "8" }}
-          m="10"
-        >
-          {todos && todos.map((todo) => (
-            <ToDoCard todo={todo} key={todo.id} />
-          ))}
-        </SimpleGrid>
-        <LightAnimatedBackground />
-        {show && <AddEditToDo />}
+        <TodoGrid />
       </main>
     </div>
   )

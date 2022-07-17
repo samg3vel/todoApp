@@ -8,8 +8,4 @@ export interface TaskToDo {
     percentage: number;
 }
 
-export enum Filter {
-    All,
-    Done,
-    Undone
-}
+export type Filter = { search?: string, status?: "A" | "D" | "U" }
